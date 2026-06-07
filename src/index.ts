@@ -5,14 +5,24 @@ import { moodRoute } from "./module/mood/mood.route";
 import { APPError } from "./utils/errorHandler";
 import { loadluaFile } from "./utils/loader";
 import { lua, to_luastring } from "fengari";
+import { Logger } from "./middleware/logger";
 
-const config = loadluaFile("./config/config.lua")
+const config = loadluaFile("./src/config/config.lua")
 
 lua.lua_getfield(config,  -1,to_luastring("port"));
 const port = lua.lua_tointeger(config, -1);
 lua.lua_pop(config, 1);
 
 const app = new Elysia()
+
+  .onRequest(({request}) => {
+    const url = new URL(request.url)
+
+    Logger({
+      method: request.method,
+      path: url.pathname
+    })
+  })
 
   .use(
     rateLimit({

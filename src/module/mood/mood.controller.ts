@@ -6,11 +6,15 @@ export const moodController = {
     return moodService.create(body);
   },
 
-  async getAll() {
-    return moodService.getAll();
-  },
+  // async getAll() {
+  //   return moodService.getAll();
+  // },
 
   async getByMood(query: MoodQuery) {
     return moodService.GetByMood(query);
   },
+
+  async GetByFilter() {
+    return moodService.GetByFilter();
+  }
 };
