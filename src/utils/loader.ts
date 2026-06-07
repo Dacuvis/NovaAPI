@@ -8,7 +8,6 @@ export function loadluaFile(filepath: string) {
   try {
     const LuaCode = readFileSync(filepath, "utf-8");
     
-    // Load string dan jalankan Lua code
     const status = lauxlib.luaL_loadstring(L, to_luastring(LuaCode)) || lua.lua_pcall(L, 0, lua.LUA_MULTRET, 0);
 
     if (status !== lua.LUA_OK) {
